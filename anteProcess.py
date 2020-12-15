@@ -51,7 +51,7 @@ import stat
 
 # Get root folder
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
-ROOT = os.path.dirname(MODULE_PATH)
+ROOT = MODULE_PATH
 
 # Ulmo throws annoying warnings...
 warnings.filterwarnings("ignore")
@@ -446,17 +446,6 @@ class Main(object):
 
 
         if self.save_folder is not None:
-            # Get main_ex version for folder path
-            module_path = os.path.dirname(os.path.realpath(__file__))
-            root_folder = os.path.dirname(module_path)
-            version_files_folder = os.path.join(root_folder, 'v')
-            main_version_file_path = os.path.join(version_files_folder, 'main_ex')
-            with open(main_version_file_path, 'r') as version_file:
-                for line in version_file:
-                    version_string = line.replace('\n','')
-                    version_list = version_string.split('.')
-                    version_for_paths = 'v{}_{}_{}'.format(version_list[0], version_list[1], version_list[2])
-                    break
             # Create PDF output Folder
             if self.data_type == 'PRCP':
                 watershed_analysis = False
