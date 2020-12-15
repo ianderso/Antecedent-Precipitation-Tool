@@ -46,7 +46,7 @@
 import os
 
 # Import 3rd Party Libraries
-import ogr
+from osgeo import ogr
 
 def check(lon, lat, shapefile, field_name):
     # Load shapefile driver
@@ -92,7 +92,7 @@ if __name__ == '__main__':
     # Find module path
     MODULE_FOLDER = os.path.dirname(os.path.realpath(__file__))
     # Find ROOT folder
-    ROOT_FOLDER = os.path.split(MODULE_FOLDER)[0]
+    ROOT_FOLDER = MODULE_FOLDER
     # Find clim_div folder
     GIS_FOLDER = os.path.join(ROOT_FOLDER, 'GIS')
     CLIM_DIV_FOLDER = os.path.join(GIS_FOLDER, 'climdiv')

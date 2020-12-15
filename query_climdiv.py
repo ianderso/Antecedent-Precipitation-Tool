@@ -54,13 +54,7 @@ import datetime
 import traceback
 import requests
 
-# Find module path
-MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
-# Find ROOT folder
-ROOT = os.path.split(MODULE_PATH)[0]
-
 import query_shapefile_at_point
-
 import JLog
 
 log = JLog.PrintLog()
@@ -68,7 +62,7 @@ log = JLog.PrintLog()
 # Find module path
 MODULE_FOLDER = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT_FOLDER = os.path.split(MODULE_FOLDER)[0]
+ROOT_FOLDER = MODULE_FOLDER
 # Find clim_div folder
 GIS_FOLDER = os.path.join(ROOT_FOLDER, 'GIS')
 CLIM_DIV_FOLDER = os.path.join(GIS_FOLDER, 'climdiv')

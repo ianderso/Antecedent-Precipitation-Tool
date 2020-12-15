@@ -45,7 +45,7 @@ import sys
 import random
 
 # Import 3rd Party Libraries
-import ogr
+from osgeo import ogr
 
 # Import Custom Libraries
 import JLog
