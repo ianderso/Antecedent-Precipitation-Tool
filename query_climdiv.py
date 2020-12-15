@@ -59,24 +59,9 @@ MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
 ROOT = os.path.split(MODULE_PATH)[0]
 
-# Import Custom Libraries
-try:
-    # Frozen Application Method
-    from . import query_shapefile_at_point
-    from .utilities import JLog
-except Exception:
-    import query_shapefile_at_point
-    # Reverse compatibility step - Add utilities folder to path directly
-    PYTHON_SCRIPTS_FOLDER = os.path.join(ROOT, 'Python Scripts')
-    TEST = os.path.exists(PYTHON_SCRIPTS_FOLDER)
-    if TEST:
-        UTILITIES_FOLDER = os.path.join(PYTHON_SCRIPTS_FOLDER, 'utilities')
-        sys.path.append(UTILITIES_FOLDER)
-    else:
-        ARC_FOLDER = os.path.join(ROOT, 'arc')
-        UTILITIES_FOLDER = os.path.join(ARC_FOLDER, 'utilities')
-        sys.path.append(UTILITIES_FOLDER)
-    import JLog
+import query_shapefile_at_point
+
+import JLog
 
 log = JLog.PrintLog()
 

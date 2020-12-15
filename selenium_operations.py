@@ -51,11 +51,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.by import By
 
-# Import Custom Libraries
-try:
-    from . import JLog
-except Exception:
-    import JLog
+import JLog
 
 
 class getJSON(object):

@@ -75,39 +75,15 @@ import pylab
 # import logging
 # logging.getLogger("urllib3").setLevel(logging.ERROR)
 
-# Import Custom Modules
-try:
-    from . import query_climdiv
-    from . import process_manager
-    from . import date_calcs
-    from . import getElev
-    from . import station_manager
-    from . import get_forecast
-    from . import get_all
-    from .utilities import JLog
-    from .utilities import web_wimp_scraper
-except Exception:
-    import query_climdiv
-    import process_manager
-    import date_calcs
-    import getElev
-    import station_manager
-    import get_forecast
-    import get_all
-    # Add utilities folder to path directly
-    PYTHON_SCRIPTS_FOLDER = os.path.join(ROOT, 'Python Scripts')
-    TEST = os.path.exists(PYTHON_SCRIPTS_FOLDER)
-    if TEST:
-        sys.path.append(PYTHON_SCRIPTS_FOLDER)
-        UTILITIES_FOLDER = os.path.join(PYTHON_SCRIPTS_FOLDER, 'utilities')
-        sys.path.append(UTILITIES_FOLDER)
-    else:
-        ARC_FOLDER = os.path.join(ROOT, 'arc')
-        sys.path.append(ARC_FOLDER)
-        UTILITIES_FOLDER = os.path.join(ARC_FOLDER, 'utilities')
-        sys.path.append(UTILITIES_FOLDER)
-    import JLog
-    import web_wimp_scraper
+import query_climdiv
+import process_manager
+import date_calcs
+import getElev
+import station_manager
+import get_forecast
+import get_all
+import JLog
+import web_wimp_scraper
 
 
 

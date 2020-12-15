@@ -55,22 +55,8 @@ ogr.UseExceptions()
 # Import Custom Libraries
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 ROOT = os.path.split(MODULE_PATH)[0]
-try:
-    from . import get_files
-    from .utilities import JLog
-except Exception:
-    # Reverse compatibility step - Add utilities folder to path directly
-    PYTHON_SCRIPTS_FOLDER = os.path.join(ROOT, 'Python Scripts')
-    TEST = os.path.exists(PYTHON_SCRIPTS_FOLDER)
-    if TEST:
-        UTILITIES_FOLDER = os.path.join(PYTHON_SCRIPTS_FOLDER, 'utilities')
-        sys.path.append(UTILITIES_FOLDER)
-    else:
-        ARC_FOLDER = os.path.join(ROOT, 'arc')
-        UTILITIES_FOLDER = os.path.join(ARC_FOLDER, 'utilities')
-        sys.path.append(UTILITIES_FOLDER)
-    import JLog
-    import get_files
+import JLog
+import get_files
 
 
 # Function Definitions
