@@ -1,0 +1,8 @@
+requests
+numpy
+pandas
+ulmo
+geopy
+matplotlib
+ogr
+selenium
