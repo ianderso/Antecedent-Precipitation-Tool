@@ -90,35 +90,18 @@ import pickle
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from win32api import GetFileVersionInfo, LOWORD, HIWORD
 
 # Import Custom Libraries
 try:
     from . import JLog
-    from . import get_chromedriver
 except Exception:
     import JLog
-    import get_chromedriver
-
-def get_chrome_version():
-    """Gets the major, minor and build versions of the local Google Chrome installation"""
-    filename = r'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
-    try:
-        info = GetFileVersionInfo(filename, "\\")
-        ms = info['FileVersionMS']
-        ls = info['FileVersionLS']
-        version_numbers = [HIWORD(ms), LOWORD(ms), HIWORD(ls)]
-        chrome_version = ".".join([str(i) for i in version_numbers])
-        return chrome_version
-    except Exception:
-        return "Unknown version"
 
 class wimp_checker(object):
 
     def __init__(self):
         self.driver = None
-        # Get Chrome Version
-        self.chrome_driver_path = get_chromedriver.get_chrome_driver_path()
+
         self.open_browser()
 
     def open_browser(self):
@@ -132,7 +115,7 @@ class wimp_checker(object):
             chrome_options.add_argument('--headless')
             # Create driver object
             log.Wrap('Attempting to open Google Chrome in headless mode...')
-            self.driver = webdriver.Chrome(self.chrome_driver_path, chrome_options=chrome_options)
+            self.driver = webdriver.Chrome(chrome_options=chrome_options)
         except Exception:
             log.Wrap(traceback.format_exc())
             try:
