@@ -119,7 +119,7 @@ def get_json_multiple_ways(url):
         json_conversion = content.json()
         return json_conversion
     except Exception:
-        requests_exception = traceback.format_exc()
+        pass
     try:
         log.print_status_message('Querying {}...'.format(base_url))
         http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED')
@@ -155,9 +155,7 @@ def test_usgs_epqs_servers():
     try:
         json_result = get_json_multiple_ways(test_url_nationalmap)
         log.Wrap('')
-        service = json_result['USGS_Elevation_Point_Query_Service']
-        query = service['Elevation_Query']
-        elevation = query['Elevation']
+        service = json_result['USGS_Elevation_Point_Query_Service']['Elevation_Query']['Elevation']
         log.Wrap('')
         log.Wrap('    ###########################################')
         log.Wrap('    # --- National Map EPQS Server Online --- #')
@@ -177,9 +175,7 @@ def test_usgs_epqs_servers():
     try:
         json_result = get_json_multiple_ways(test_url_ned)
         log.Wrap('')
-        service = json_result['USGS_Elevation_Point_Query_Service']
-        query = service['Elevation_Query']
-        elevation = query['Elevation']
+        service = json_result['USGS_Elevation_Point_Query_Service']['Elevation_Query']['Elevation']
         log.Wrap('')
         log.Wrap('    ##################################')
         log.Wrap('    # --- NED EPQS Server Online --- #')
