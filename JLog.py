@@ -77,9 +77,7 @@ def deleteReadOnly(filePath):
 #-------------------------------------Class Definitions-----------------------------------#
 
 # Define Local Variables
-UTILITIES_FOLDER = os.path.dirname(os.path.realpath(__file__))
-ARC_FOLDER = os.path.dirname(UTILITIES_FOLDER)
-ROOT_FOLDER = os.path.dirname(ARC_FOLDER)
+ROOT_FOLDER = os.path.dirname(os.path.realpath(__file__))
 
 class PrintLog(object):
     """Handles the printing and logging of various types of inputs"""
@@ -151,24 +149,6 @@ class PrintLog(object):
             while len(message) < 118:
                 message = u'{0} '.format(message)
             self.prevMsgLen = None
-        if self.Log is not None:
-            tries = 5
-            while tries > 0:
-                try:
-                    with open(self.Log, "a") as f:
-                        # Write message to Log
-                        f.write(u"{0}\n".format(message))
-                        tries = 0
-                    if self.LogOnly == True:
-                        sys.stdout.flush()
-                        return
-                except:
-                    tries -= 1
-                    if tries == 0:
-                        self.Wrap('-------------------------------------------------------')
-                        self.Wrap('EXCEPTION:')
-                        self.Wrap(traceback.format_exc())
-                        self.Wrap('-------------------------------------------------------')
         # Print message in Python Window, if open
         try:
             print(message)
