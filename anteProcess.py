@@ -48,6 +48,7 @@ import traceback
 import warnings
 import pickle
 import stat
+import argparse
 
 import requests
 import urllib3
@@ -85,6 +86,9 @@ import web_wimp_scraper
 
 # Get root folder
 ROOT = os.path.dirname(os.path.realpath(__file__))
+
+
+
 
 
 # FUNCTION DEFINITIONS
@@ -1412,7 +1416,8 @@ class Main(object):
                                                                      output_folder=self.folderPath,
                                                                      watershed_analysis=self.watershed_analysis)
                 if not wet_dry_season_result == 'ERROR':
-                    description_table_values.append([r"WebWIMP H$_2$O Balance", wet_dry_season_result])
+                    description_table_values.append([r"WebWIMP H$_2$O Balance",
+                                                     wet_dry_season_result])
                     if wet_dry_season_result == 'Wet Season':
                         description_table_colors.append([light_grey, white])
                     if wet_dry_season_result == 'Dry Season':
@@ -1561,7 +1566,9 @@ class Main(object):
 
             if first_point_y_rolling_total is not None:
                 first_point_label = first_point_x_date_string
-                ax1.annotate(first_point_label, xy=(first_point_x_date_string, first_point_y_rolling_total), xycoords='data',
+                ax1.annotate(first_point_label,
+                             xy=(first_point_x_date_string, first_point_y_rolling_total),
+                             xycoords='data',
                              xytext=first_point_xytext,
                              textcoords='offset points',
                              size=13,
@@ -1573,7 +1580,9 @@ class Main(object):
 
             if second_point_y_rolling_total is not None:
                 second_point_label = second_point_x_date_string
-                ax1.annotate(second_point_label, xy=(second_point_x_date_string, second_point_y_rolling_total), xycoords='data',
+                ax1.annotate(second_point_label,
+                             xy=(second_point_x_date_string, second_point_y_rolling_total),
+                             xycoords='data',
                              xytext=second_point_xytext,
                              textcoords='offset points',
                              size=13,
@@ -1585,7 +1594,9 @@ class Main(object):
 
             if third_point_y_rolling_total is not None:
                 third_point_label = third_point_x_date_string
-                ax1.annotate(third_point_label, xy=(third_point_x_date_string, third_point_y_rolling_total), xycoords='data',
+                ax1.annotate(third_point_label,
+                             xy=(third_point_x_date_string, third_point_y_rolling_total),
+                             xycoords='data',
                              xytext=third_point_xytext,
                              textcoords='offset points',
                              size=13,
@@ -1612,13 +1623,16 @@ class Main(object):
             the_table.set_fontsize(10)
 
             # Plot Stations Table
-            station_table_colors = [[light_grey, light_grey, light_grey, light_grey, light_grey, light_grey, light_grey, light_grey]]
+            station_table_colors = [[light_grey, light_grey, light_grey, light_grey,
+                                     light_grey, light_grey, light_grey, light_grey]]
             for row in station_table_values[1:]:
-                station_table_colors.append([white, white, white, white, white, white, white, white])
+                station_table_colors.append([white, white, white, white,
+                                             white, white, white, white])
 
             stations_table = ax4.table(cellText=station_table_values,
                                        cellColours=station_table_colors,
-                                       colWidths=[0.25, 0.15, 0.095, 0.097, 0.087, 0.087, 0.104, 0.132],
+                                       colWidths=[0.25, 0.15, 0.095, 0.097,
+                                                  0.087, 0.087, 0.104, 0.132],
                                        loc='center')
             stations_table.auto_set_font_size(False)
             stations_table.set_fontsize(10)
@@ -1732,9 +1746,12 @@ class Main(object):
         else:
             # Save PDF
             if self.image_name != "N/A":
-                imagePath = os.path.join(self.folderPath, '{}_{}.pdf'.format(self.dates.observation_date, self.image_name))
+                imagePath = os.path.join(
+                    self.folderPath,
+                    '{}_{}.pdf'.format(self.dates.observation_date, self.image_name))
             else:
-                imagePath = os.path.join(self.folderPath, '{}.pdf'.format(self.dates.observation_date))
+                imagePath = os.path.join(
+                    self.folderPath, '{}.pdf'.format(self.dates.observation_date))
             self.log.Wrap('Saving ' + imagePath)
             fig.savefig(imagePath, facecolor='0.77')
 
@@ -1748,20 +1765,43 @@ class Main(object):
             self.log.Wrap('')
             return imagePath, yMax, ante_calc_result, score, wet_dry_season_result, palmer_value, palmer_class
 
+
 if __name__ == '__main__':
     SAVE_FOLDER = os.path.join(ROOT, 'Outputs')
     INSTANCE = Main()
 
-    INPUT_LIST = ['PRCP',
-                  '35.921550',
-                  '-78.910600',
-                  2020,
-                  10,
-                  15,
-                  None,
-                  None,
-                  SAVE_FOLDER,
-                  False]
+    parser = argparse.ArgumentParser()
 
-    INSTANCE.setInputs(INPUT_LIST, watershed_analysis=False, all_sampling_coordinates=None)
+    parser.add_argument('--data_type', default='PRCP',
+                        help='Type of calculation, options are PRCP, SNOW, SNWD')
 
+    parser.add_argument('--latitude', help='Site Latitude')
+    parser.add_argument('--longitude', help='Site Longitude')
+    parser.add_argument('--year')
+    parser.add_argument('--month')
+    parser.add_argument('--day')
+    parser.add_argument('--image_name', help='Image Name', default=None)
+    parser.add_argument('--image_source', help='Image Source', default=None)
+    parser.add_argument('--save_folder', help='Save Folder', default=SAVE_FOLDER)
+    parser.add_argument('--forecast_setting', help='Forecast Setting', default=False)
+    parser.add_argument('--watershed_analysis', help='watershed_analysis', default=False)
+    parser.add_argument('--all_sampling_coordinates', help='', default=None)
+    args = parser.parse_args()
+
+    # INPUT_LIST = ['PRCP',
+    #               '35.921550',
+    #               '-78.910600',
+    #               2020,
+    #               10,
+    #               15,
+    #               None,
+    #               None,
+    #               SAVE_FOLDER,
+    #               False]
+
+    INPUT_LIST = [args.data_type, args.latitude, args.longitude, args.year, args.month, args.day,
+                  args.image_name, args.image_source, args.save_folder, args.forecast_setting]
+
+    INSTANCE.setInputs(INPUT_LIST,
+                       watershed_analysis=args.watershed_analysis,
+                       all_sampling_coordinates=args.all_sampling_coordinates)
