@@ -1764,4 +1764,4 @@ if __name__ == '__main__':
                   False]
 
     INSTANCE.setInputs(INPUT_LIST, watershed_analysis=False, all_sampling_coordinates=None)
-    input('Stall for debugging.  Press enter or click X to close')
+
