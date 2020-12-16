@@ -334,7 +334,7 @@ class PrintLog(object):
                 if needed_chars > 0:
                     message = message + (" "*needed_chars)
                 self.prevMsgLen = len(message)
-                print(message, end="\r")
+                print(message)
                 sys.stdout.flush()
             except Exception:
                 pass

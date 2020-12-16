@@ -446,19 +446,19 @@ class Main(object):
             # Create PDF output Folder
             if self.data_type == 'PRCP':
                 watershed_analysis = False
-                coord_string = '{}, {}'.format(self.site_lat, self.site_long)
+                coord_string = '{}-{}'.format(self.site_lat, self.site_long)
                 self.folderPath = os.path.join(self.save_folder, coord_string)
             if self.data_type == 'SNOW':
                 watershed_analysis = False
 
                 snow_folder = os.path.join(self.save_folder, 'Snowfall')
-                coord_string = '{}, {}'.format(self.site_lat, self.site_long)
+                coord_string = '{}-{}'.format(self.site_lat, self.site_long)
                 self.folderPath = os.path.join(snow_folder, coord_string)
             if self.data_type == 'SNWD':
                 watershed_analysis = False
 
                 snow_depth_folder = os.path.join(self.save_folder, 'Snow Depth')
-                coord_string = '{}, {}'.format(self.site_lat, self.site_long)
+                coord_string = '{}-{}'.format(self.site_lat, self.site_long)
                 self.folderPath = os.path.join(snow_depth_folder, coord_string)
             folder_exists = os.path.exists(self.folderPath)
             if not folder_exists:
@@ -469,7 +469,7 @@ class Main(object):
                 except Exception:
                     pass
             # Create CSV output Folder
-            self.stationFolderPath = os.path.join(self.folderPath, "Station Data")
+            self.stationFolderPath = os.path.join(self.folderPath, "StationData")
             folder_exists = os.path.exists(self.stationFolderPath)
             if not folder_exists:
                 self.log.Wrap('Creating stationData output directory ({})...'.format(self.stationFolderPath))
@@ -572,9 +572,6 @@ class Main(object):
         # Kill any lingering child processes from previous runs
         for minion in multiprocessing.active_children():
             minion.terminate()
-        # Set Path to Python Executable
-        executable = sys.executable
-        multiprocessing.set_executable(executable)
         # Set number of Sub-processes based on CPU_Count
 #        num_minions = multiprocessing.cpu_count()
         num_minions = 4 # > 4 resulted in many failed FTP downloads that succeeded in-line later
@@ -1783,20 +1780,10 @@ class Main(object):
 if __name__ == '__main__':
     SAVE_FOLDER = os.path.join(ROOT, 'Outputs')
     INSTANCE = Main()
-        # Input_List reference
-#        self.data_type = inputList[0]
-#        self.site_lat = inputList[1]
-#        self.site_long = inputList[2]
-#        year = inputList[3]
-#        month = inputList[4]
-#        day = inputList[5]
-#        self.image_name = inputList[6]
-#        self.image_source = inputList[7]
-#        self.SAVE_FOLDER = inputList[8]
-#        self.forecast_setting = inputList[9]
+
     INPUT_LIST = ['PRCP',
-                  '38.5',
-                  '-121.5',
+                  '35.921550',
+                  '-78.910600',
                   2018,
                   10,
                   15,
@@ -1804,15 +1791,6 @@ if __name__ == '__main__':
                   None,
                   SAVE_FOLDER,
                   False]
-    INPUT_LIST = ['PRCP',
-                  '62.235095',
-                  '-159.057434',
-                  2018,
-                  10,
-                  15,
-                  None,
-                  None,
-                  SAVE_FOLDER,
-                  False]
+
     INSTANCE.setInputs(INPUT_LIST, watershed_analysis=False, all_sampling_coordinates=None)
     input('Stall for debugging.  Press enter or click X to close')

@@ -70,7 +70,7 @@ def check(lon, lat, shapefile, field_name):
     ctran = ogr.osr.CoordinateTransformation(point_ref, geo_ref)
 
     #Transform incoming longitude/latitude to the shapefile's projection
-    [lon, lat, z] = ctran.TransformPoint(lon, lat)
+    [lat, lon, z] = ctran.TransformPoint(lon, lat)
 
     #Create a point
     pt = ogr.Geometry(ogr.wkbPoint)
