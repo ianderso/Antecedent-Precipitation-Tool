@@ -1,15 +1,15 @@
 #  This software was developed by United States Army Corps of Engineers (USACE)
 #  employees in the course of their official duties.  USACE used copyrighted,
-#  open source code to develop this software, as such this software 
+#  open source code to develop this software, as such this software
 #  (per 17 USC 101) is considered "joint work."  Pursuant to 17 USC 105,
 #  portions of the software developed by USACE employees in the course of their
 #  official duties are not subject to copyright protection and are in the public
 #  domain.
-#  
+#
 #  USACE assumes no responsibility whatsoever for the use of this software by
 #  other parties, and makes no guarantees, expressed or implied, about its
-#  quality, reliability, or any other characteristic. 
-#  
+#  quality, reliability, or any other characteristic.
+#
 #  The software is provided "as is," without warranty of any kind, express or
 #  implied, including but not limited to the warranties of merchantability,
 #  fitness for a particular purpose, and noninfringement.  In no event shall the
@@ -17,12 +17,12 @@
 #  liability, whether in an action of contract, tort or otherwise, arising from,
 #  out of or in connection with the software or the use or other dealings in the
 #  software.
-#  
+#
 #  Public domain portions of this software can be redistributed and/or modified
 #  freely, provided that any derivative works bear some notice that they are
 #  derived from it, and any modified versions bear some notice that they have
-#  been modified. 
-#  
+#  been modified.
+#
 #  Copyrighted portions of the software are annotated within the source code.
 #  Open Source Licenses, included in the source code, apply to the applicable
 #  copyrighted portions.  Copyrighted portions of the software are not in the
@@ -49,20 +49,17 @@ import warnings
 import pickle
 import stat
 
-# Get root folder
-MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
-ROOT = MODULE_PATH
+import requests
+import urllib3
+import json
+import numpy
+import pandas
 
 # Ulmo throws annoying warnings...
 warnings.filterwarnings("ignore")
 
 # Import 3rd Party Libraries
 
-import requests
-import urllib3
-import json
-import numpy
-import pandas
 import ulmo
 from geopy.distance import great_circle
 import matplotlib
@@ -74,9 +71,6 @@ import matplotlib.dates as dates
 import matplotlib.ticker as ticker
 from matplotlib import rcParams
 import pylab
-# Stop annoying urllib3 errors for EPQS tests
-# import logging
-# logging.getLogger("urllib3").setLevel(logging.ERROR)
 
 import query_climdiv
 import process_manager
@@ -89,6 +83,8 @@ import get_all
 import JLog
 import web_wimp_scraper
 
+# Get root folder
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
 # FUNCTION DEFINITIONS
@@ -101,7 +97,7 @@ def get_json_multiple_ways(url):
     elif 'https://ned.usgs.gov/epqs' in url:
         base_url = 'https://ned.usgs.gov/epqs'
     # Common USGS Error Message
-    temp_unavailable_message = 'The requested service is temporarily unavailable.  Please try later.'
+    temp_unavailable_message = 'The requested service is temporarily unavailable.'
     unavailable_error_count = 0
     # Try urllib3
     # Try Requests module
@@ -149,7 +145,8 @@ def get_json_multiple_ways(url):
         pass
 
 def test_usgs_epqs_servers():
-    """Tests if either one of the known USGS Elevation Point Query Service (EPQS) Servers are Online"""
+    """Tests if either one of the known USGS Elevation Point Query Service (EPQS)
+       Servers are Online"""
     log = JLog.PrintLog()
     log.print_title('USGS Elevation Point Query Service (EPQS) Status Check')
     log.Wrap('Original - National Map Variant:')
@@ -339,7 +336,7 @@ class Main(object):
         self.old_all_sampling_coordinates = None
         self.all_sampling_coordinate_elevations = None
         # Test USGS EPQS Servers
-        self.epqs_variant = test_usgs_epqs_servers() 
+        self.epqs_variant = test_usgs_epqs_servers()
 
     def set_yMax(self, yMax):
         self.log.Wrap('Setting yMax to ' + str(yMax))
@@ -735,7 +732,7 @@ class Main(object):
                     count_copy += 1
                 else:
                     # Get another chance to download missing data while waiting
-                    if result.data is None: 
+                    if result.data is None:
                         result.run()
                     self.stations.append(result)
                     self.recentStations.append(result)
@@ -1158,7 +1155,7 @@ class Main(object):
         following_water_year_dates = pandas.date_range(self.dates.following_water_year_start_date, self.dates.following_water_year_end_date)
         # Get all days Upper and Lower Normal values for the current water year
         following_normal_low_series, following_normal_high_series = calc_normal_values(dates=following_water_year_dates, values=allDays)
-        
+
         # Append current year to prior year to create final output
         normal_low_series = prior_normal_low_series.append(current_normal_low_series).append(following_normal_low_series)
         normal_high_series = prior_normal_high_series.append(current_normal_high_series.append(following_normal_high_series))
@@ -1695,7 +1692,9 @@ class Main(object):
         if self.data_type == 'SNOW' or self.data_type == 'SNWD':
             if first_point_y_rolling_total is not None:
                 first_point_label = 'Observation Date'
-                ax1.annotate(first_point_label, xy=(first_point_x_date_string, first_point_y_rolling_total), xycoords='data',
+                ax1.annotate(first_point_label,
+                             xy=(first_point_x_date_string, first_point_y_rolling_total),
+                             xycoords='data',
                              xytext=first_point_xytext,
                              textcoords='offset points',
                              size=15,

@@ -1,15 +1,15 @@
 #  This software was developed by United States Army Corps of Engineers (USACE)
 #  employees in the course of their official duties.  USACE used copyrighted,
-#  open source code to develop this software, as such this software 
+#  open source code to develop this software, as such this software
 #  (per 17 USC 101) is considered "joint work."  Pursuant to 17 USC 105,
 #  portions of the software developed by USACE employees in the course of their
 #  official duties are not subject to copyright protection and are in the public
 #  domain.
-#  
+#
 #  USACE assumes no responsibility whatsoever for the use of this software by
 #  other parties, and makes no guarantees, expressed or implied, about its
-#  quality, reliability, or any other characteristic. 
-#  
+#  quality, reliability, or any other characteristic.
+#
 #  The software is provided "as is," without warranty of any kind, express or
 #  implied, including but not limited to the warranties of merchantability,
 #  fitness for a particular purpose, and noninfringement.  In no event shall the
@@ -17,12 +17,12 @@
 #  liability, whether in an action of contract, tort or otherwise, arising from,
 #  out of or in connection with the software or the use or other dealings in the
 #  software.
-#  
+#
 #  Public domain portions of this software can be redistributed and/or modified
 #  freely, provided that any derivative works bear some notice that they are
 #  derived from it, and any modified versions bear some notice that they have
-#  been modified. 
-#  
+#  been modified.
+#
 #  Copyrighted portions of the software are annotated within the source code.
 #  Open Source Licenses, included in the source code, apply to the applicable
 #  copyrighted portions.  Copyrighted portions of the software are not in the
@@ -40,7 +40,7 @@
 
 """
 Identify the HUC of a given huc_digits in which the supplied coordinates lie.
-If selected, generate random sampling points (# and minimum spacing determined by HUC Digits) 
+If selected, generate random sampling points (# and minimum spacing determined by HUC Digits)
 """
 
 # Import Standard Libraries
@@ -85,7 +85,7 @@ def findHorizontalUnits(csString):
 def huc_id_and_sample(lat, lon, huc_digits, sample=False, base_huc=None):
     """
     Identify the HUC of a given huc_digits in which the supplied coordinates lie.
-    If selected, generate random sampling points (# and minimum spacing determined by HUC Digits) 
+    If selected, generate random sampling points (# and minimum spacing determined by HUC Digits)
     """
     # Shapefile Query Adapted from
     # https://stackoverflow.com/questions/7861196/check-if-a-geopoint-with-latitude-and-longitude-is-within-a-shapefile/13433127#13433127
@@ -121,14 +121,14 @@ def huc_id_and_sample(lat, lon, huc_digits, sample=False, base_huc=None):
         # Get attribute filter
         attribute_filter = "HUC10 LIKE '{}%'".format(base_huc)
     elif huc_digits == 12:
-        # Find Selected WBD_Shapefile and 
+        # Find Selected WBD_Shapefile and
         base_huc_folder = os.path.join(wbd_folder, str(base_huc)[:2])
         shape_folder = os.path.join(base_huc_folder, "Shape")
         shapefile = os.path.join(shape_folder, 'WBDHU{}.shp'.format(huc_digits))
         field_name = "HUC{}".format(huc_digits)
         # Get attrigbute filter
         attribute_filter = "HUC12 LIKE '{}%'".format(base_huc)
-    
+
     # Test for Shapefile
     log.Wrap('Checking for existing Watershed Boundary Data...')
     shapefile_exists = os.path.exists(shapefile)
@@ -187,7 +187,7 @@ def huc_id_and_sample(lat, lon, huc_digits, sample=False, base_huc=None):
             if contains_point:
                 selected_huc = feat_in
                 selected_huc_geom = feat_in_geom
-                break    
+                break
 
     # Pure SpatialFilter method, incredibly slow for HUC10 and HUC12 (Hangs)
     else:
@@ -270,7 +270,7 @@ def huc_id_and_sample(lat, lon, huc_digits, sample=False, base_huc=None):
         # Announce protocol commencement
         log.Wrap('')
         log.Wrap('Generating potential sampling points and testing the above conditions...')
-        
+
         # Add initially selected coordinates as the first sampling point
         previously_selected_points.append(pt)
         coordinates_within_polygon.append([lat, lon])
@@ -504,5 +504,5 @@ if __name__ == '__main__':
                 print('{},{}'.format(POINT[0], POINT[1]))
         print("------------------")
         print("")
-    
+
 
