@@ -443,19 +443,19 @@ class Main(object):
             # Create PDF output Folder
             if self.data_type == 'PRCP':
                 watershed_analysis = False
-                coord_string = '{}-{}'.format(self.site_lat, self.site_long)
+                coord_string = '{}{}'.format(self.site_lat, self.site_long)
                 self.folderPath = os.path.join(self.save_folder, coord_string)
             if self.data_type == 'SNOW':
                 watershed_analysis = False
 
                 snow_folder = os.path.join(self.save_folder, 'Snowfall')
-                coord_string = '{}-{}'.format(self.site_lat, self.site_long)
+                coord_string = '{}{}'.format(self.site_lat, self.site_long)
                 self.folderPath = os.path.join(snow_folder, coord_string)
             if self.data_type == 'SNWD':
                 watershed_analysis = False
 
                 snow_depth_folder = os.path.join(self.save_folder, 'Snow Depth')
-                coord_string = '{}-{}'.format(self.site_lat, self.site_long)
+                coord_string = '{}{}'.format(self.site_lat, self.site_long)
                 self.folderPath = os.path.join(snow_depth_folder, coord_string)
             folder_exists = os.path.exists(self.folderPath)
             if not folder_exists:
