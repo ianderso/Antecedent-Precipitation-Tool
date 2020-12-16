@@ -406,7 +406,7 @@ def calculate_wet_dry_table(wimp_rows, output_folder=None):
     log.Wrap('Parsing scraped WebWimp values and Calculating Wet/Dry Season...')
     # Attempt to create CSV PrintLog and write first line
     csv = False
-    csv_log_file = os.path.join(output_folder, 'WebWimp Values.csv')
+    csv_log_file = os.path.join(output_folder, 'WebWimpValues.csv')
     if output_folder is not None:
         csv_log = JLog.PrintLog(Delete=True,
                                 LogOnly=True,
@@ -440,7 +440,7 @@ def calculate_wet_dry_table(wimp_rows, output_folder=None):
 
 def read_values_from_csv(output_folder=None):
     """Read previously saved CSV of WebWIMP results table into a csv_rows list"""
-    csv_path = os.path.join(output_folder, 'WebWimp Values.csv')
+    csv_path = os.path.join(output_folder, 'WebWimpValues.csv')
     csv_exists = os.path.exists(csv_path)
     if not csv_exists:
         return 'No CSV'
@@ -448,7 +448,7 @@ def read_values_from_csv(output_folder=None):
     # Create Printlogs
     log = JLog.PrintLog(Indent=2)
     # Print Terms and start of table
-    log.Wrap('Reading previously saved "WebWimp Values.csv"...')
+    log.Wrap('Reading previously saved "WebWimpValues.csv"...')
     num = 0
     with open(csv_path) as csv_file:
         for line in csv_file:
@@ -512,18 +512,15 @@ class WimpScraper(object):
         self.rows = []
         self.wimp_checker_instance = None
         self.wimp_dict = None
-        self.batch_dict = None
+        self.batch_dict = {}
         self.wimp_checker_executions = 0
         self.unpickle_dict()
     
-    def pickle_dict(self):
-        # Locate web_wimp_dict_pickle 
-        utilities_path = os.path.dirname(os.path.realpath(__file__))
-        python_scripts_path = os.path.dirname(utilities_path)
-        root_path = os.path.dirname(python_scripts_path)
+    def pickle_dict(self):        
+        root_path = os.path.dirname(os.path.realpath(__file__))
         pickle_folder = os.path.join(root_path, 'cached')
         wimp_dict_pickle_path = os.path.join(pickle_folder, 'wimp_dict.pickle')
-        pickle_lockfile = os.path.join('wimp_dict.pickle.lock')
+        pickle_lockfile = os.path.join(pickle_folder, 'wimp_dict.pickle.lock')
         while os.path.exists(pickle_lockfile):
             print('Waiting for pickle file to be free...')
             time.sleep(1)
@@ -553,10 +550,7 @@ class WimpScraper(object):
                         self.log.Wrap('WibWIMP Dictionary could not be cached.')
 
     def unpickle_dict(self):
-        # Locate web_wimp_dict_pickle 
-        utilities_path = os.path.dirname(os.path.realpath(__file__))
-        python_scripts_path = os.path.dirname(utilities_path)
-        root_path = os.path.dirname(python_scripts_path)
+        root_path = os.path.dirname(os.path.realpath(__file__))
         pickle_folder = os.path.join(root_path, 'cached')
         wimp_dict_pickle_path = os.path.join(pickle_folder, 'wimp_dict.pickle')
         wimp_dict_pickle_exists = os.path.exists(wimp_dict_pickle_path)
@@ -599,7 +593,7 @@ class WimpScraper(object):
                 scrape_coords = True
             if scrape_coords:
                 self.log.Wrap('{} of {}'.format(position, num_points))
-                coordinate_folder = os.path.join(wimp_cache_folder, '{}, {}'.format(lat, lon))
+                coordinate_folder = os.path.join(wimp_cache_folder, '{}{}'.format(lat, lon))
                 self.rows = []
                 self.get_season(lat=lat,
                                 lon=lon,

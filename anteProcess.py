@@ -65,6 +65,9 @@ import numpy
 import pandas
 import ulmo
 from geopy.distance import great_circle
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 from matplotlib.legend_handler import HandlerLine2D
 import matplotlib.dates as dates
@@ -261,12 +264,6 @@ def value_list_to_water_year_table(dates, values):
             newrow.append(values[n])
         n += 1
     allDays = numpy.array(list_of_arrays)
-#    numpy.set_printoptions(precision=2)
-#    numpy.set_printoptions(suppress=True)
-#    self.log.Wrap(allDays)
-#    self.log.Wrap(allDays.shape)
-#    # Save Numpy Array as CSV
-#    allDays.tofile("C:/Temp/allDays.csv", ',','%f')
     return allDays
 
 
@@ -572,8 +569,6 @@ class Main(object):
         # Kill any lingering child processes from previous runs
         for minion in multiprocessing.active_children():
             minion.terminate()
-        # Set number of Sub-processes based on CPU_Count
-#        num_minions = multiprocessing.cpu_count()
         num_minions = 4 # > 4 resulted in many failed FTP downloads that succeeded in-line later
         # Establish communication queues
         self.log.Wrap("Establishing Communication Queues...")
@@ -823,8 +818,6 @@ class Main(object):
                 self.wimp_scraper.get_season(lat=float(self.site_lat),
                                              lon=float(self.site_long),
                                              month=int(self.dates.observation_month),
-                                             output_folder=None,
-#                                             output_folder=self.folderPath,
                                              watershed_analysis=self.watershed_analysis)
                 del palmer_value, palmer_class, palmer_color
                 # Query all Elevations
@@ -1582,13 +1575,8 @@ class Main(object):
 
         # Mark / Label Sampling Points
         if self.data_type == 'PRCP':
-#            ax1.set_title("Antecedent Precipitation and 30-Year Normal Range from NOAA's Daily Global Historical Climatology Network",
-#                          fontsize=20)
             ax1.set_title("Antecedent Precipitation vs Normal Range based on NOAA's Daily Global Historical Climatology Network",
                           fontsize=20)
-#            ax1.set_title('NOAA - National Climatic Data Center - Daily Global'
-#                          ' Historical Climatology Network - Rainfall Data',
-#                          fontsize=20)
 
             if first_point_y_rolling_total is not None:
                 first_point_label = first_point_x_date_string
@@ -1784,7 +1772,7 @@ if __name__ == '__main__':
     INPUT_LIST = ['PRCP',
                   '35.921550',
                   '-78.910600',
-                  2018,
+                  2020,
                   10,
                   15,
                   None,

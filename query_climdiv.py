@@ -121,7 +121,7 @@ def ensure_current_pdsidv_file():
         # urllib3
         http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED')
         response = http.request('GET', proc_date_url)
-        proc_date = str(response.data.split(b"\n")[0], 'utf-8')
+        proc_date = str(response.data.split(b"\n")[0])
         current_file_name = 'climdiv-pdsidv-v1.0.0-{}'.format(str(proc_date))
         current_file_path = os.path.join(CLIM_DIV_FOLDER, current_file_name)
         log.Wrap('    Latest file = {}'.format(current_file_name))
