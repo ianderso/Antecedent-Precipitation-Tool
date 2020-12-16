@@ -1,4 +1,15 @@
 # Antecedent Precipitation Tool (APT)
+
+1. install Chrome Driver
+https://understandingdata.com/install-google-chrome-selenium-ec2-aws/
+2. install GDAL libraries
+https://gist.github.com/abelcallejo/e75eb93d73db6f163b076d0232fc7d7e
+3. install requirements
+pip install -r requirements.txt
+4. run
+LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH PYTHONPATH=/usr/local/lib64/python2.7/site-packages/:/home/ec2-user/.local/lib/python2.7/site-packages/:$PYTHONPATH python anteProcess.py 
+
+
 ## Where can I get it?
 Follow the instructions on the [**LATEST RELEASE PAGE**](https://github.com/jDeters-USACE/Antecedent-Precipitation-Tool/releases/latest)
 

@@ -61,10 +61,9 @@ log = JLog.PrintLog()
 
 # Find module path
 MODULE_FOLDER = os.path.dirname(os.path.realpath(__file__))
-# Find ROOT folder
-ROOT_FOLDER = MODULE_FOLDER
+
 # Find clim_div folder
-GIS_FOLDER = os.path.join(ROOT_FOLDER, 'GIS')
+GIS_FOLDER = os.path.join(MODULE_FOLDER, 'GIS')
 CLIM_DIV_FOLDER = os.path.join(GIS_FOLDER, 'climdiv')
 
 

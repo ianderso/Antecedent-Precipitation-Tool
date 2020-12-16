@@ -48,13 +48,11 @@ import zipfile
 # Find module path
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = os.path.split(MODULE_PATH)[0]
+ROOT = MODULE_PATH
 
 
 # Import Custom Libraries
 import JLog
-
-
 
 
 def parse_version(version_file_path=None, version_url=None):

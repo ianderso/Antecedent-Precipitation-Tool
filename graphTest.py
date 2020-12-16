@@ -37,7 +37,7 @@ from pandas.plotting import register_matplotlib_converters
 register_matplotlib_converters()
 
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
-ROOT = os.path.split(MODULE_PATH)[0]
+ROOT = MODULE_PATH
 
 convert_to_feet = True
 

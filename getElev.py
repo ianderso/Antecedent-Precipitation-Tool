@@ -53,7 +53,7 @@ from bs4 import BeautifulSoup
 # Find module path
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = os.path.split(MODULE_PATH)[0]
+ROOT = MODULE_PATH
 
 # Import Custom Libraries
 import JLog

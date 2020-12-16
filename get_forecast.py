@@ -58,7 +58,7 @@ import requests
 # Find module path
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = os.path.split(MODULE_PATH)[0]
+ROOT = MODULE_PATH
 
 # import custom libraries
 import JLog

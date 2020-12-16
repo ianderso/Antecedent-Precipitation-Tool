@@ -58,10 +58,9 @@ def main(lat, lon):
     in_usa = False
     # Find module path
     module_folder = os.path.dirname(os.path.realpath(__file__))
-    # Find ROOT folder
-    root_folder = os.path.split(module_folder)[0]
+
     # Find USA Boundary Shapefile
-    gis_folder = os.path.join(root_folder, 'GIS')
+    gis_folder = os.path.join(module_folder, 'GIS')
     usa_shapefile_folder = os.path.join(gis_folder, 'us_shp')
     usa_shapefile_path = os.path.join(usa_shapefile_folder, 'cb_2018_us_nation_5m.shp')
 

@@ -60,7 +60,7 @@ import numpy
 # Find module path
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = os.path.split(MODULE_PATH)[0]
+ROOT = MODULE_PATH
 
 # Import custom modules from Utilities folder
 import JLog

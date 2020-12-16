@@ -86,10 +86,6 @@ def shapefile_sample(lat, lon, shapefile):
     lon = float(lon)
     log.Wrap("Analyzing Custom Watershed Shapefile")
     log.Wrap('Shapefile Path = {}'.format(shapefile))
-    # Find module path
-    module_folder = os.path.dirname(os.path.realpath(__file__))
-    # Find ROOT folder
-    root_folder = os.path.split(module_folder)[0]
 
     # Create list to store exploded points
     previously_selected_points = []
@@ -258,6 +254,7 @@ def shapefile_sample(lat, lon, shapefile):
 
 if __name__ == '__main__':
     import time
+    ROOT = os.path.dirname(os.path.realpath(__file__))
     start_time = time.clock()
     SCRATCH_FOLDER = os.path.join(ROOT, 'Scratch')
     WATERSHED_FOLDER = os.path.join(SCRATCH_FOLDER, 'Cosumnes River Watershed (ESRI)')

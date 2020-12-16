@@ -52,7 +52,7 @@ multiprocessing.freeze_support()
 # Find module path
 MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = os.path.split(MODULE_PATH)[0]
+ROOT = MODULE_PATH
 
 # Add Utilities dir to path
 import JLog
