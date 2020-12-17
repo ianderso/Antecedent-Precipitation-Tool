@@ -48,7 +48,6 @@ import requests
 # Import PIP Libraries
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.common.by import By
 
 import JLog
@@ -74,7 +73,6 @@ class getJSON(object):
             except Exception:
                 self.L.Wrap(traceback.format_exc())
                 time.sleep(1)
-                pass
         if self.jsonResult is None:
             self.L.Wrap("All methods failed for automated elevation query!")
             return None

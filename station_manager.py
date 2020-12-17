@@ -48,8 +48,6 @@ by selected type and date range.
 
 # Import built-in modules
 import os
-import sys
-import traceback
 import time
 
 # Import third-party modules
@@ -57,10 +55,8 @@ from geopy.distance import great_circle
 import ulmo
 import numpy
 
-# Find module path
-MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = MODULE_PATH
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 # Import custom modules from Utilities folder
 import JLog
@@ -139,7 +135,6 @@ class Main(object):
                 tries = 0
                 self.trimData()
             except Exception:
-                #self.L.Write(traceback.format_exc())
                 tries -= 1
                 time.sleep(2)
     # End of Run
@@ -200,7 +195,6 @@ class Main(object):
                     self.current_actual_rows = current_num_rows - current_num_null
                 del df_copy
         except Exception as exc_str:
-#            self.L.Write(traceback.format_exc())
             self.L.Write(exc_str)
     # End of trimData
 
