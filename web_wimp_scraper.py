@@ -132,7 +132,8 @@ class wimp_checker(object):
         """
         Queries WebWIMP:
         The Web-based, Water-Budget, Interactive, Modeling Program using
-        Selenium to operate the JavaScript forms at "http://climate.geog.udel.edu/~wimp/index.html"
+        Selenium to operate the JavaScript forms at
+        "http://climate.geog.udel.edu/~wimp/index.html"
         """
         # Create PrintLog
         log = JLog.PrintLog(Indent=2)
@@ -140,8 +141,6 @@ class wimp_checker(object):
         log.Wrap('Scraping Page ({})...'.format(url))
 
         try:
-            # Open Page
-#            log.Wrap('  Navigating to first page...')
             for x in range(4):
                 try:
                     if self.driver is None:
@@ -179,7 +178,6 @@ class wimp_checker(object):
             # Allow for page to load
             time.sleep(.1)
             # Find Latitude input box, clear it, then type selected Latitude
-#            log.Wrap("  Inputting latitude and longitude in respective boxes and hitting 'Return'")
             lat_element = self.driver.find_element('name', 'lati')
             lat_element.clear()
             lat_element.send_keys("{}".format(lat))
@@ -189,7 +187,8 @@ class wimp_checker(object):
             lon_element.send_keys("{}".format(lon))
             # Submit inputs by pressing return key
             lon_element.send_keys(Keys.RETURN)
-            # Switch tabs (because it opened a new one and apparently it doesn't automatically switch)
+            # Switch tabs (because it opened a new one and apparently
+            # it doesn't automatically switch)
             self.driver.switch_to.window(self.driver.window_handles[-1])
             # Allow for page to load
             time.sleep(.1)
@@ -199,9 +198,6 @@ class wimp_checker(object):
                 if 'large body of water.' in elem.text:
                     waterbody_error = True
             if waterbody_error:
-#                log.Wrap("  Received 'Point falls within large body of water' error")
-#                log.Wrap("    Attempting to work around by:")
-#                log.Wrap("      -Clicking the 'Revise Longitude and Latitude' button")
                 # Try to clear the error, which often goes away if you just click Revise lat/lon
                 for element in self.driver.find_elements(By.XPATH, "//input"):
                     if element.get_attribute('value') == 'Revise Longitude and Latitude':
@@ -237,11 +233,6 @@ class wimp_checker(object):
                         if 'large body of water.' in elem.text:
                             waterbody_error = True
                     if waterbody_error:
-        #                log.Wrap("  Received 'Point falls within large body of water' error")
-        #                log.Wrap("    Attempting to work around by:")
-        #                log.Wrap("      -Returning Latitude to original value")
-        #                log.Wrap("      -Adding '0.01' to Longitude")
-        #                log.Wrap("      -Clicking the 'Revise Longitude and Latitude' button")
                         # Find Latitude input box, clear it, then type selected Latitude + .01
                         lat_element = self.driver.find_element('name', 'Latitude')
                         lat_element.clear()
@@ -274,7 +265,8 @@ class wimp_checker(object):
                 if element.get_attribute('value') == 'Water Balance':
                     water_balance_element = element
             water_balance_element.click()
-            # Switch tabs (because it opened a new one and apparently it doesn't automatically switch)
+            # Switch tabs (because it opened a new one and apparently it
+            # doesn't automatically switch)
             self.driver.switch_to.window(self.driver.window_handles[-1])
             # Allow for page to load THIS STEP LAGS SO GIVE IT EXTRA TIME
             time.sleep(4)
@@ -291,7 +283,8 @@ class wimp_checker(object):
             rows = []
             row = []
             jan_count = 0
-            month_text = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            month_text = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             raw_list = []
             for elem in self.driver.find_elements_by_xpath("//td"):
                 raw_list.append(elem.text)
@@ -315,11 +308,13 @@ class wimp_checker(object):
                             if elem.text == 'Monthly and annual climatic water balance graph':
                                 graph_link_element = elem
                         graph_link_element.click()
-                        # Switch tabs (because it opened a new one and apparently it doesn't automatically switch)
+                        # Switch tabs (because it opened a new one and apparently
+                        # it doesn't automatically switch)
                         self.driver.switch_to.window(self.driver.window_handles[-1])
                         # Save a screenshot of the Water Balance Graph
                         log.Wrap('Getting Web Wimp Water Balance Graph screenshot...')
-                        web_wimp_screenshot_path = os.path.join(output_folder, 'Web WIMP Water Balance Graph.png')
+                        web_wimp_screenshot_path = os.path.join(output_folder,
+                                                                'Web WIMP Water Balance Graph.png')
                         for numerator in range(10):
                             numerator += 1
                             # Test if screenshot exists
@@ -406,8 +401,9 @@ def calculate_wet_dry_table(wimp_rows, output_folder=None):
     log.Wrap('Parsing scraped WebWimp values and Calculating Wet/Dry Season...')
     # Attempt to create CSV PrintLog and write first line
     csv = False
-    csv_log_file = os.path.join(output_folder, 'WebWimpValues.csv')
+
     if output_folder is not None:
+        csv_log_file = os.path.join(output_folder, 'WebWimpValues.csv')
         csv_log = JLog.PrintLog(Delete=True,
                                 LogOnly=True,
                                 Log=csv_log_file)
@@ -421,7 +417,9 @@ def calculate_wet_dry_table(wimp_rows, output_folder=None):
             diff = row[5]
             dst = row[7]
             def_val = row[9]
-            # Correct interpreation (Confirmed by ERDC) - (Includes first part of recovery period IF it doesn't immediately eleminate deficit (DEF))
+            # Correct interpreation (Confirmed by ERDC) -
+            # (Includes first part of recovery period IF it doesn't
+            # immediately eleminate deficit (DEF))
             season = "Wet" # Starting value
             if float(diff) < 0:
                 if float(dst) < 0:
@@ -494,10 +492,12 @@ def get_season_from_rows(rows, month=None):
         if num == month:
             selected_season = '{} Season'.format(season)
             # Write the current Table row AND Selected Month Marker
-            log.Wrap('  | {} | {} | {} | {} | {} Season | <---Selected Month'.format(mon, diff_four, dst_four, def_val_three, season))
+            log.Wrap('  | {} | {} | {} | {} | {} Season | <---Selected Month'.format(
+                mon, diff_four, dst_four, def_val_three, season))
         else:
             # Write the current Table row
-            log.Wrap('  | {} | {} | {} | {} | {} Season |'.format(mon, diff_four, dst_four, def_val_three, season))
+            log.Wrap('  | {} | {} | {} | {} | {} Season |'.format(
+                mon, diff_four, dst_four, def_val_three, season))
         num += 1
     # Print bottom line of table
     log.Wrap('   -------------------------------------- ')
@@ -514,6 +514,7 @@ class WimpScraper(object):
         self.wimp_dict = {}
         self.batch_dict = {}
         self.wimp_checker_executions = 0
+        self.watershed_analysis = watershed_analysis
         self.unpickle_dict()
 
     def pickle_dict(self):
@@ -624,20 +625,13 @@ class WimpScraper(object):
         lon = round(lon, 1)
         self.log.Wrap('Scraping WebWIMP at {},{}...'.format(lat, lon))
         try:
-#            # First check to see if we already have rows
-#            self.log.Wrap(' Checking for existing data...')
-#            if self.rows:
-#                season = get_season_from_rows(self.rows, month)
-#                self.log.print_separator_line()
-#                self.log.Write('')
-#                return season
-            # Then check if we have it in the dictionary
             wimp_dict_key = '{},{}'.format(lat, lon)
             try:
                 self.rows = self.wimp_dict[wimp_dict_key]
                 if self.rows in error_messages:
                     self.log.Write(' {}'.format(self.rows))
-                    self.log.Wrap(' No data found at {},{}. Trying an adjacent point.'.format(lat, lon))
+                    self.log.Wrap(' No data found at {},{}. Trying an adjacent point.'.format(
+                        lat, lon))
                     lat_a = lat + 0.1
                     lon_a = lon
                     self.log.Wrap('Scraping WebWIMP at {},{}...'.format(lat_a, lon_a))
@@ -686,7 +680,8 @@ class WimpScraper(object):
                     self.log.print_separator_line()
                     self.log.Write('')
                     return season
-            # Create wimp_checker_instance (preserves Chrome Driver instance for speed in batch operations)
+            # Create wimp_checker_instance (preserves Chrome Driver
+            # instance for speed in batch operations)
             if self.wimp_checker_instance is None:
                 self.wimp_checker_instance = wimp_checker()
             else:
