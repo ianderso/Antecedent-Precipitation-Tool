@@ -45,14 +45,10 @@ import requests
 import time
 import zipfile
 
-# Find module path
-MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
-# Find ROOT folder
-ROOT = MODULE_PATH
-
-
-# Import Custom Libraries
 import JLog
+
+# Find ROOT folder
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 
 def parse_version(version_file_path=None, version_url=None):
@@ -88,21 +84,16 @@ def parse_version(version_file_path=None, version_url=None):
     return version_major, version_minor, version_patch
 
 def extract_to_folder(zip_file, output_folder, pwd=None):
-#    with zipfile.ZipFile(zip_file, 'r') as zip_ref:
-#        if pwd is None:
-#            zip_ref.extractall(output_folder)
-#        else:
-#            zip_ref.extractall(output_folder, pwd=pwd.encode())
-    with zipfile.ZipFile(zip_file) as zip:
-        for zip_info in zip.infolist():
+    with zipfile.ZipFile(zip_file) as file_to_extract:
+        for zip_info in file_to_extract.infolist():
             if pwd is None:
                 try:
-                    zip.extract(zip_info, output_folder)
+                    file_to_extract.extract(zip_info, output_folder)
                 except Exception:
                     pass
             else:
                 try:
-                    zip.extract(zip_info, output_folder, pwd=pwd.encode())
+                    file_to_extract.extract(zip_info, output_folder, pwd=pwd.encode())
                 except Exception:
                     pass
 
@@ -269,27 +260,3 @@ def get_only_newer_version(file_url, local_file_path, local_check_file=None,
         log.Time(dl_start, 'Downloading {}{}'.format(extracted, file_name))
         log.Wrap('')
     return
-
-
-#if __name__ == '__main__':
-#    LOCAL_VERSION = check_local_version(version_local_path=r'D:\Code\Python\WinPythonARC_dev_EPA_dl_dl\core\main_ex_version.txt')
-#    print(LOCAL_VERSION)
-
-#    ensure_file_exists(file_url='https://www.spk.usace.army.mil/Portals/12/documents/regulatory/upload/APT/WBD/HUC8_Albers.zip',
-#                       local_file_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\WBD\zip\HUC8_Albers.zip',
-#                       version_url='https://www.spk.usace.army.mil/Portals/12/documents/regulatory/upload/APT/WBD/WBD.txt',
-#                       version_local_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\versions\WBD.txt',
-#                       extract_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\WBD')
-
-#    ensure_file_exists(file_url='https://www.spk.usace.army.mil/Portals/12/documents/regulatory/upload/APT/WBD/HUC8_Albers.zip',
-#                       local_file_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\WBD\zip\HUC10_Albers.zip.001',
-#                       version_url='https://www.spk.usace.army.mil/Portals/12/documents/regulatory/upload/APT/WBD/WBD.txt',
-#                       version_local_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\versions\WBD.txt',
-#                       extract_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\WBD')
-
-#    ensure_file_exists(file_url='https://prd-tnm.s3.amazonaws.com/StagedProducts/Hydrography/WBD/HU2/Shape/WBD_01_HU2_Shape.zip',
-#                       local_file_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\WBD\zip\WBD_01_HU2_Shape.zip',
-#                       extract_path=r'C:\Users\L2RCSJ9D\Desktop\delete\apt\WBD')
-
-#    version = check_web_version('https://raw.githubusercontent.com/jDeters-USACE/Test_REpo/master/Release/version')
-#    print('version = {}'.format(version))

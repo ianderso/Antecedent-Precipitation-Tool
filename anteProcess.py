@@ -1770,6 +1770,11 @@ if __name__ == '__main__':
     SAVE_FOLDER = os.path.join(ROOT, 'Outputs')
     INSTANCE = Main()
 
+    get_all.ensure_wbd_folder()
+    get_all.ensure_us_shp_folder()
+    get_all.ensure_climdiv_folder()
+    get_all.ensure_WIMP()
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--data_type', default='PRCP',

@@ -49,10 +49,8 @@ import time
 import warnings
 multiprocessing.freeze_support()
 
-# Find module path
-MODULE_PATH = os.path.dirname(os.path.realpath(__file__))
 # Find ROOT folder
-ROOT = MODULE_PATH
+ROOT = os.path.dirname(os.path.realpath(__file__))
 
 # Add Utilities dir to path
 import JLog

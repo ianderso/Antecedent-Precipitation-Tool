@@ -116,7 +116,7 @@ def shapefile_sample(lat, lon, shapefile):
     transform_albers_to_wgs = ogr.osr.CoordinateTransformation(albers_ref, point_ref)
 
     #Transform incoming longitude/latitude to the shapefile's projection
-    [t_lon, t_lat, z] = ctran.TransformPoint(lon, lat)
+    [t_lat, t_lon, z] = ctran.TransformPoint(lon, lat)
 
     # Create a point
     pt = ogr.Geometry(ogr.wkbPoint)
@@ -247,28 +247,3 @@ def shapefile_sample(lat, lon, shapefile):
     log.Wrap('{} sampling points selected from {} randomly generated candidates'.format(points_selected, points_tested))
     log.print_separator_line()
     return coordinates_within_polygon, huc_square_miles
-
-
-
-
-if __name__ == '__main__':
-    import time
-    ROOT = os.path.dirname(os.path.realpath(__file__))
-    start_time = time.clock()
-    SCRATCH_FOLDER = os.path.join(ROOT, 'Scratch')
-    WATERSHED_FOLDER = os.path.join(SCRATCH_FOLDER, 'Cosumnes River Watershed (ESRI)')
-    SHAPEFILE = os.path.join(WATERSHED_FOLDER, 'Cosumnes_River_Watershed.shp')
-    sampling_points, huc_square_miles = shapefile_sample(lat=38.3315574,
-                                                         lon=-121.3622894,
-                                                         shapefile=SHAPEFILE)
-    print(huc_square_miles)
-    for point in sampling_points:
-        print(point)
-#    print(huc)
-#    for point in sampling_points:
-#        print(point)
-    duration = time.clock() - start_time
-    print('DevOnly: Processing took {} seconds'.format(duration))
-
-
-

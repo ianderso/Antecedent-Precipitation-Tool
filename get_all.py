@@ -40,25 +40,16 @@
 ######################################
 
 import os
-
 import get_files
 
-MODULE_FOLDER = os.path.dirname(os.path.realpath(__file__))
-ROOT_FOLDER = MODULE_FOLDER
+ROOT_FOLDER = os.path.dirname(os.path.realpath(__file__))
 
-
-def ensure_version_file():
-    local_file_path = os.path.join(ROOT_FOLDER, 'version')
-    file_url = 'https://github.com/jDeters-USACE/Antecedent-Precipitation-Tool/raw/master/version'
-    get_files.ensure_file_exists(file_url=file_url,
-                                 local_file_path=local_file_path)
 
 def ensure_wbd_folder():
     file_url = 'https://github.com/jDeters-USACE/Antecedent-Precipitation-Tool/releases/download/v1.0/WBD.zip'
     gis_folder = os.path.join(ROOT_FOLDER, 'GIS')
     local_file_path = os.path.join(gis_folder, "WBD.zip")
     wbd_folder = os.path.join(gis_folder, "WBD")
-    wbd_Exists = os.path.exists(wbd_folder)
     version_folder = os.path.join(ROOT_FOLDER, 'v')
     local_version_file = os.path.join(version_folder, 'wbd')
     web_version_url = 'https://github.com/jDeters-USACE/Antecedent-Precipitation-Tool/raw/master/v/wbd'
@@ -81,8 +72,8 @@ def ensure_us_shp_folder():
             pass
         file_url = 'https://github.com/jDeters-USACE/Antecedent-Precipitation-Tool/releases/download/v1.0.3/us_shp.zip'
         get_files.ensure_file_exists(file_url=file_url,
-                                    local_file_path=local_file_path,
-                                    extract_path=gis_folder)
+                                     local_file_path=local_file_path,
+                                     extract_path=gis_folder)
 
 def ensure_climdiv_folder():
     gis_folder = os.path.join(ROOT_FOLDER, 'GIS')
@@ -113,11 +104,6 @@ def ensure_WIMP():
         get_files.ensure_file_exists(file_url=file_url,
                                      local_file_path=local_file_path,
                                      extract_path=wimp_folder)
-
-
-def main():
-    pass
-
 
 
 if __name__ == '__main__':

@@ -42,13 +42,9 @@
 
 # Import Standard Libraries
 import os
-import sys
-import random
 
 # Import 3rd Party Libraries
 from osgeo import ogr
-
-import JLog
 
 
 def main(lat, lon):
@@ -79,19 +75,18 @@ def main(lat, lon):
     point_ref = ogr.osr.SpatialReference()
     point_ref.ImportFromEPSG(4326)
     ctran = ogr.osr.CoordinateTransformation(point_ref, geo_ref)
-    rtran = ogr.osr.CoordinateTransformation(geo_ref, point_ref)
 
     #Transform incoming longitude/latitude to the shapefile's projection
-    [t_lon, t_lat, z] = ctran.TransformPoint(lon, lat)
+    [t_lat, t_lon, elevat] = ctran.TransformPoint(lon, lat)
 
     # Create a point
-    pt = ogr.Geometry(ogr.wkbPoint)
-    pt.SetPoint_2D(0, t_lon, t_lat)
+    point = ogr.Geometry(ogr.wkbPoint)
+    point.SetPoint_2D(elevat, t_lon, t_lat)
 
     # Check if point is within boundary
     for feat_in in lyr_in:
         feat_in_geom = feat_in.geometry()
-        contains_point = feat_in_geom.Contains(pt)
+        contains_point = feat_in_geom.Contains(point)
         if contains_point:
             in_usa = True
             return in_usa
