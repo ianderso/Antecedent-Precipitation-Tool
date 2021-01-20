@@ -1777,14 +1777,15 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
 
+    parser.add_argument('--latitude', help='Site Latitude', required=True)
+    parser.add_argument('--longitude', help='Site Longitude', required=True)
+    parser.add_argument('--year', required=True)
+    parser.add_argument('--month', required=True)
+    parser.add_argument('--day', required=True)
+
     parser.add_argument('--data_type', default='PRCP',
                         help='Type of calculation, options are PRCP, SNOW, SNWD')
-
-    parser.add_argument('--latitude', help='Site Latitude')
-    parser.add_argument('--longitude', help='Site Longitude')
-    parser.add_argument('--year')
-    parser.add_argument('--month')
-    parser.add_argument('--day')
+    
     parser.add_argument('--image_name', help='Image Name', default=None)
     parser.add_argument('--image_source', help='Image Source', default=None)
     parser.add_argument('--save_folder', help='Save Folder', default=SAVE_FOLDER)
