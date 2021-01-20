@@ -1765,6 +1765,18 @@ class Main(object):
             self.log.Wrap('')
             return imagePath, yMax, ante_calc_result, score, wet_dry_season_result, palmer_value, palmer_class
 
+def checkUSA(lat, lon):
+    """Checks if a given Lat/Long is within the US boundary (To decide which elev service to use)"""
+    # http://en.wikipedia.org/wiki/Extreme_points_of_the_United_States#Westernmost
+    top = 49.3457868 # north lat
+    left = -124.7844079 # west long
+    right = -66.9513812 # east long
+    bottom = 24.7433195 # south lat
+
+    if bottom <= float(lat) <= top and left <= float(lon) <= right:
+        return True
+    else:
+        return False
 
 if __name__ == '__main__':
     SAVE_FOLDER = os.path.join(ROOT, 'Outputs')
@@ -1794,16 +1806,9 @@ if __name__ == '__main__':
     parser.add_argument('--all_sampling_coordinates', help='', default=None)
     args = parser.parse_args()
 
-    # INPUT_LIST = ['PRCP',
-    #               '35.921550',
-    #               '-78.910600',
-    #               2020,
-    #               10,
-    #               15,
-    #               None,
-    #               None,
-    #               SAVE_FOLDER,
-    #               False]
+    if not checkUSA(args.latitude, args.longitude):
+        print("Latitude and/or Longitude not within USA")
+        exit()
 
     INPUT_LIST = [args.data_type, args.latitude, args.longitude, args.year, args.month, args.day,
                   args.image_name, args.image_source, args.save_folder, args.forecast_setting]
