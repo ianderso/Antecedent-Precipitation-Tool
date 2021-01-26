@@ -1754,7 +1754,7 @@ class Main(object):
         else:
             # Save PDF
             latstring = str(self.site_lat).replace('.', '-')
-            longstring = str(self.site_long).replace(',', '-')
+            longstring = str(self.site_long).replace('.', '-')
             if self.image_name != "N/A":
                 imagePath = os.path.join(
                     self.folderPath,
