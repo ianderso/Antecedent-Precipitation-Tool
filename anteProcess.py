@@ -1753,6 +1753,8 @@ class Main(object):
             return None, yMax, ante_calc_result, score, wet_dry_season_result, palmer_value, palmer_class
         else:
             # Save PDF
+            latstring = str(self.site_lat).replace('.', '-')
+            longstring = str(self.site_long).replace(',', '-')
             if self.image_name != "N/A":
                 imagePath = os.path.join(
                     self.folderPath,
@@ -1760,7 +1762,7 @@ class Main(object):
             else:
                 imagePath = os.path.join(
                     self.folderPath, 'apt-{date}-{longitude}-{latitude}.pdf'.format(
-                        date=self.dates.observation_date, longitude=self.site_long, latitude=self.site_lat))
+                        date=self.dates.observation_date, longitude=longstring, latitude=latstring))
             self.log.Wrap('Saving ' + imagePath)
             fig.savefig(imagePath, facecolor='0.77')
 
