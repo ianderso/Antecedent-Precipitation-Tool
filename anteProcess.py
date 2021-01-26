@@ -1470,6 +1470,14 @@ class Main(object):
             ax2 = plt.subplot2grid((9, 10), (6, 3), colspan=7, rowspan=2)
             ax3 = plt.subplot2grid((9, 10), (6, 0), colspan=3, rowspan=2)
             ax4 = plt.subplot2grid((9, 10), (8, 3), colspan=7, rowspan=1)
+            # Add Logo
+            try:
+                images_folder = os.path.join(ROOT, 'images')
+                logo_file = os.path.join(images_folder, 'RD_1_0.png')
+                logo = plt.imread(logo_file)
+            except:
+                pass
+            img = fig.figimage(X=logo, xo=118, yo=20)
         else:
             ax1 = plt.subplot2grid((9, 10), (0, 0), colspan=10, rowspan=7)
             ax2 = plt.subplot2grid((9, 10), (7, 3), colspan=7, rowspan=2)
@@ -1751,7 +1759,8 @@ class Main(object):
                     '{}_{}.pdf'.format(self.dates.observation_date, self.image_name))
             else:
                 imagePath = os.path.join(
-                    self.folderPath, '{}.pdf'.format(self.dates.observation_date))
+                    self.folderPath, 'apt-{date}-{longitude}-{latitude}.pdf'.format(
+                        date=self.dates.observation_date, longitude=self.site_long, latitude=self.site_lat))
             self.log.Wrap('Saving ' + imagePath)
             fig.savefig(imagePath, facecolor='0.77')
 
